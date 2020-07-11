@@ -1,12 +1,8 @@
-<p align="center">
-  <img src="https://storage.googleapis.com/golden-wind/rocketredis/logo.png" width="200" />
-</p>
-
 <h1 align="center">
-  Rocket Redis
+  Cassandra Management GUI
 </h1>
 
-Rocket Redis is a Graphic User Interface for managing Redis databases with ease.
+This repo is forked from [Rocket Redis](https://github.com/diego3g/rocketredis) for managing Cassandra database with ease.
 
 🚧 **Rocket Redis is under development** 🚧
 
