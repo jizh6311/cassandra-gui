@@ -16,14 +16,10 @@
     "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
     "postinstall": "electron-builder install-app-deps",
     "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
+    "lint:fix": "eslint --ext .tsx,.ts,.js src/ electron/ --fix",
     "package": "yarn build && electron-builder build --publish never",
     "test": "jest --passWithNoTests",
     "tsc": "tsc --noEmit"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "husky": {
     "hooks": {
@@ -40,10 +36,16 @@
       "sort-package-json"
     ]
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "@babel/runtime": "7.10.4",
     "@unform/core": "2.1.3",
     "@unform/web": "2.1.3",
+    "cassandra-driver": "4.5.2",
     "electron-store": "5.2.0",
     "electron-updater": "4.3.1",
     "ioredis": "4.17.3",

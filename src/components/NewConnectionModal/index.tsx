@@ -114,7 +114,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         addToast({
           type: 'error',
           title: 'Error on connection',
-          description: 'Error estabilishing connection with your Redis server'
+          description: `Error estabilishing connection with your Cassandra server: ${err}`
         })
       }
     } finally {
@@ -135,7 +135,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
       <Form
         initialData={{
           host: 'localhost',
-          port: '6379'
+          port: '9042'
         }}
         ref={formRef}
         onSubmit={handleCreateConnection}

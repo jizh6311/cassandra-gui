@@ -56,7 +56,7 @@ const Header: React.FC = () => {
 
   return (
     <Container>
-      <strong>Rocket Redis</strong>
+      <strong>Cassandra Management</strong>
 
       {shouldUseMacOSWindowActions ? (
         <WindowActions position="left" shouldShowIconsOnHover>

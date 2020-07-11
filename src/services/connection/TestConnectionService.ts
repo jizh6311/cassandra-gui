@@ -1,24 +1,22 @@
-import Redis, { RedisOptions } from 'ioredis'
+import * as cassandra from 'cassandra-driver'
 
-export function testConnection(options: RedisOptions): Promise<void> {
+export function testConnection(options): Promise<void> {
   return new Promise((resolve, reject) => {
-    const connection = new Redis(options.port, options.host, {
-      enableReadyCheck: true,
-      connectTimeout: 3000,
-      password: options.password,
-      retryStrategy() {
-        return null
-      }
+    // TODO: Add Cassandra credentials
+    const client = new cassandra.Client({
+      contactPoints: [`${options.host}:${options.port}`],
+      localDataCenter: 'datacenter1'
     })
 
-    connection.once('ready', () => {
-      resolve()
+    client
+      .connect()
+      .then(() => {
+        resolve()
 
-      connection.disconnect()
-    })
-
-    connection.once('error', () => {
-      reject(new Error())
-    })
+        client.shutdown()
+      })
+      .catch(err => {
+        reject(err)
+      })
   })
 }
