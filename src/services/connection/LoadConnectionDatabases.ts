@@ -1,4 +1,4 @@
-import Redis from 'ioredis'
+import * as cassandra from 'cassandra-driver'
 
 import { IConnection, IDatabase } from '../../atoms/connections'
 
@@ -6,48 +6,32 @@ export function loadConnectionDatabases(
   connection: IConnection
 ): Promise<IDatabase[]> {
   return new Promise((resolve, reject) => {
-    const redis = new Redis(connection.port, connection.host, {
-      enableReadyCheck: true,
-      connectTimeout: 3000,
-      password: connection.password,
-      retryStrategy() {
-        return null
-      }
+    // TODO: Add Cassandra credentials
+    const client = new cassandra.Client({
+      contactPoints: [`${options.host}:${options.port}`],
+      localDataCenter: 'datacenter1'
     })
 
-    redis.once('ready', async () => {
-      const databasesRaw = await redis.info('keyspace')
+    client
+      .connect()
+      .then(() => {
+        const connectionState = client
+          .getState()
+          .getConnectedHosts()
+          .map(host => {
+            return {
+              // TODO: update the data struct for cassandra
+              name: host.address,
+              keys: 1
+            }
+          })
 
-      const connectionDatabases = databasesRaw
-        .split('\n')
-        .slice(1)
-        .reduce((databases: IDatabase[] = [], databaseLine) => {
-          const matched = /(db[0-9]{1,}):keys=([0-9]{1,}).+/gi.exec(
-            databaseLine
-          )
+        resolve(connectionDatabases)
 
-          if (matched) {
-            const [, db, keys] = matched
-
-            return [
-              ...databases,
-              {
-                name: db,
-                keys: Number(keys)
-              }
-            ]
-          }
-
-          return databases
-        }, [])
-
-      resolve(connectionDatabases)
-
-      redis.disconnect()
-    })
-
-    redis.once('error', () => {
-      reject(new Error())
-    })
+        client.shutdown()
+      })
+      .catch(err => {
+        reject(err)
+      })
   })
 }
