@@ -14,8 +14,8 @@ export function loadConnectionDatabases(
 
     client
       .connect()
-      .then(() => {
-        const connectionState = client
+      .then(async () => {
+        const connectionDatabases = client
           .getState()
           .getConnectedHosts()
           .map(host => {
