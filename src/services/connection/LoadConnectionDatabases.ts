@@ -8,7 +8,7 @@ export function loadConnectionDatabases(
   return new Promise((resolve, reject) => {
     // TODO: Add Cassandra credentials
     const client = new cassandra.Client({
-      contactPoints: [`${options.host}:${options.port}`],
+      contactPoints: [`${connection.host}:${connection.port}`],
       localDataCenter: 'datacenter1'
     })
 
