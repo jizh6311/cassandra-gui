@@ -23,11 +23,11 @@ import {
   currentKeyState
 } from '../../../atoms/connections'
 import { useToast } from '../../../context/toast'
-import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
 import {
   initializeConnection,
   terminateConnection
-} from '../../../services/RedisConnection'
+} from '../../../services/CassandraConnection'
+import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
 import ConnectionFormModal from '../ConnectionFormModal'
 import DeleteConnectionModal from '../DeleteConnectionModal'
 import {

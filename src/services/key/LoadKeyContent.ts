@@ -1,4 +1,4 @@
-import { connection } from '../RedisConnection'
+import { connection } from '../CassandraConnection'
 
 export interface IKeyContent {
   content: string | null

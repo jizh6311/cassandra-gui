@@ -1,4 +1,4 @@
-import { connection } from '../RedisConnection'
+import { connection } from '../CassandraConnection'
 
 export async function loadKeysFromDatabase(): Promise<string[]> {
   if (!connection) {
